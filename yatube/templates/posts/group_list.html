@@ -16,15 +16,15 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Подключен файл со стандартными стилями бустрап -->
 
-    <title> {{ group.title }}.</title>
+    <title>Записи сообщества {{ group.title }} | Yatube</title>
 </head>
 <body>
 
 <main>
     <div class="container">
-        <h1>{{ group.title }}.</h1>
+        <h1>{{ group.title }}</h1>
         <p>
-
+            {{ group.description }}
         </p>
         <article>
             {% for post in posts %}
