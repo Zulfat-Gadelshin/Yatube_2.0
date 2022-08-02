@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+
 {% load static %}
 <html lang="ru"> <!-- Язык сайта - русский -->
 <head>
@@ -22,11 +23,19 @@
         <h1> Последние обновления на сайте </h1>
 
         <article>
-            {% for post in posts %}
+            {% for post in page_obj %}
             <ul>
                 <li>
-                    Автор: {{ post.author.get_full_name }}
+                    Автор: <a href="{% url 'post_url:profile' post.author.username %}">
+                    {% if post.author.get_full_name %}
+                    {{ post.author.get_full_name }}
+                    {% else %}
+                    {{ post.author.username }}
+                    {% endif %}
+                </a>
+
                 </li>
+
                 <li>
                     Дата публикации: {{ post.pub_date|date:"d E Y" }}
                 </li>
@@ -34,15 +43,23 @@
             <p>{{ post.text }}</p>
             {% if post.group %}
             <a href="{% url 'group_url:group_posts' post.group.slug %}">все записи группы</a>
+
             {% endif %}
+            <a href="{% url 'post_url:users_posts' post.author.username %}">все записи пользователя</a>
+            <a href="{% url 'post_url:post_detail' post.pk %}">инфомация о посте</a>
+
 
             {% if not forloop.last %}
             <hr>
             {% endif %}
             {% endfor %}
+
         </article>
         <!-- под последним постом нет линии -->
     </div>
 </main>
 </body>
+
+
+{% include 'posts/includes/paginator.html' %}
 {% endblock %}

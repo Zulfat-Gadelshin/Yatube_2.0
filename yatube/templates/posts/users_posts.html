@@ -16,22 +16,22 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Подключен файл со стандартными стилями бустрап -->
 
-    <title>Записи сообщества {{ group.title }} | Yatube</title>
+    <title>Записи пользователя {{ cur_user.get_full_name }} |</title>
 </head>
 <body>
 
 <main>
     <div class="container">
-        <h1>{{ group.title }}</h1>
-        <p>
-            {{ group.description }}
-        </p>
+        <h1>    {% if post.author.get_full_name  %}
+                  {{ post.author.get_full_name }}
+                {% else %}
+                  {{ post.author.username }}
+                {% endif %}</h1>
+
         <article>
-           {% for post in page_obj %}
+            {% for post in posts %}
             <ul>
-                <li>
-                    Автор: {{ post.author.get_full_name }}
-                </li>
+
                 <li>
                     Дата публикации: {{ post.pub_date|date:"d E Y" }}
                 </li>
@@ -44,12 +44,9 @@
             {% endif %}
             {% endfor %}
         </article>
-
         <hr>
-
     </div>
 </main>
 
 </body>
-{% include 'posts/includes/paginator.html' %}
 {% endblock %}

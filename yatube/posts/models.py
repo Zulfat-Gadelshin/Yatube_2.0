@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from groups.models import Group
 
+
 User = get_user_model()
 
 
@@ -20,3 +21,7 @@ class Post(models.Model):
         null=True,
         related_name='posts'
     )
+
+    def __str__(self):
+        return self.text
+
